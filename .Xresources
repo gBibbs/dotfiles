@@ -64,12 +64,13 @@ URxvt*externalBorder:    0
 
 ! fonts
 #define font1 DejaVu Sans Mono for Powerline
+#define font2 DejaVuSansMono Nerd Font
 URxvt*letterSpace: 	    		-2
-URxvt*font:                 	xft:font1:regular:size=10
-URxvt*imFont:               	xft:font1:regular:size=10
-URxvt*boldFont:             	xft:font1:bold:size=10
-URxvt*italicFont:           	xft:font1:italic:size=10
-URxvt*boldItalicFont:     		xft:font1:regular:size=10
+URxvt*font:                 	xft:font2:regular:size=10
+URxvt*imFont:               	xft:font2:regular:size=10
+URxvt*boldFont:             	xft:font2:bold:size=10
+URxvt*italicFont:           	xft:font2:italic:size=10
+URxvt*boldItalicFont:     	xft:font2:regular:size=10
 ! run :.!fc-list | grep <font-name>
 
 ! perl extensions
