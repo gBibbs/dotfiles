@@ -41,14 +41,18 @@ myFocusedBorder = "#81A1C1"
 ------------------------------
 -- Layouts Definitions
 ------------------------------
+mySpacing = spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
+
 tall    = renamed [Replace "Tall"]
+	$ mySpacing
 	$ ResizableTall 1 (3/100) (1/2) []
 floats	= renamed [Replace "Float"]
 	$ simplestFloat
+spirals = renamed [Replace "Spiral"]
+	$ mySpacing
+	$ spiral (6/7)
 
-myLayout = 
-	spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
-	tall ||| floats ||| spiral (6/7) ||| Mirror tall ||| noBorders Full
+myLayout = gaps[(U,10), (R,10), (D,10), (L,10)] $ (tall ||| spiral (6/7) ||| Mirror tall ||| floats ||| noBorders Full)
 
 ------------------------------
 -- Workspaces
@@ -116,7 +120,7 @@ myManageHook = composeAll
 ------------------------------
 myStartupHook = do
 	spawnOnce "xsetroot -cursor_name left_ptr &"
-	spawnOnce "picom &"
+	spawnOnce "picom --config /home/g/.config/picom/picom.conf &"
 	spawnOnce "nitrogen --restore &"
 	spawn "urxvtd -q -o -f &"
 	setWMName "LG3D"
@@ -126,7 +130,7 @@ myStartupHook = do
 ------------------------------
 main = do
     xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc"
-    --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc"
+    --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc1"
     xmonad $ docks myBaseConfig
 	{ startupHook = myStartupHook
 	, manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageHook myBaseConfig
@@ -134,9 +138,10 @@ main = do
 	, logHook = dynamicLogWithPP xmobarPP
 			{ ppOutput = \x -> hPutStrLn xmproc x
 			, ppTitle = xmobarColor "#a3be8c" "" . shorten 60
-			, ppCurrent = xmobarColor "#EBCB8B" "" . wrap "[" "]"
-			, ppHidden = xmobarColor "#88C0D0" ""
+			, ppCurrent = xmobarColor "#ebcb8b" "" . wrap "[" "]"
+			, ppHidden = xmobarColor "#88c0d0" ""
 			, ppLayout = xmobarColor "#B48EAD" ""
+			, ppWsSep = " | "
 			}
 	, workspaces = myClickableWorkspaces
 	, modMask = myModMask
