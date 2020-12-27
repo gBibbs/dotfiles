@@ -1,0 +1,15 @@
+
+xmonad.hs:36:16: warning: [-Wdeprecations]
+    In the use of ‘defaultConfig’
+    (imported from XMonad, but defined in XMonad.Config):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad and XMonad.Config) instead."
+   |
+36 | myBaseConfig = defaultConfig
+   |                ^^^^^^^^^^^^^
+
+xmonad.hs:45:1: warning: [-Wtabs]
+    Tab character found here, and in 70 further locations.
+    Please use spaces instead.
+   |
+45 |         $ ResizableTall 1 (3/100) (1/2) []
+   | ^^^^^^^^
