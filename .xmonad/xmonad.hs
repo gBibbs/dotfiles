@@ -47,13 +47,8 @@ floats	= renamed [Replace "Float"]
 	$ simplestFloat
 
 myLayout = 
-    spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
-    tall ||| floats ||| spiral (6/7) ||| Mirror tall ||| noBorders Full
---    where
---	tiled = ResizableTall nmaster delta tiled_ratio []
---	nmaster = 1
---	delta = 3/100
---	tiled_ratio = 1/2
+	spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
+	tall ||| floats ||| spiral (6/7) ||| Mirror tall ||| noBorders Full
 
 ------------------------------
 -- Workspaces
@@ -89,7 +84,10 @@ myKeys =
 	, ("M-f", spawn "firefox")
 	, ("M-<Return>", spawn myTerminal)
 	
+	, ("C-S-t", withFocused $ windows . W.sink)
+	-- Alt Tab between windows in current ws		
 	, ("M1-<Tab>", windows W.focusDown)
+
 	-- Resize the layout
 	, ("M-S-h", sendMessage Shrink)
 	, ("M-S-l", sendMessage Expand)
@@ -103,24 +101,25 @@ myKeys =
 	, ("M-C-q", io (exitWith ExitSuccess))
 	, ("M-C-r", spawn "xmonad --recompile && xmonad --restart")	
 	]
+
 ------------------------------
 -- Layout Exceptions
 ------------------------------
 myManageHook = composeAll
-    [ className =? "Gimp"		--> doFloat
-    , resource  =? "desktop_window"	--> doIgnore
-    , resource  =? "kdesktop"		--> doIgnore
-    ]
+	[ className =? "Gimp"		--> doFloat
+	, resource  =? "desktop_window"	--> doIgnore
+	, resource  =? "kdesktop"	--> doIgnore
+	]
 
 ------------------------------
 -- Startup Hook
 ------------------------------
 myStartupHook = do
-    spawnOnce "xsetroot -cursor_name left_ptr &"
-    spawnOnce "picom &"
-    spawnOnce "nitrogen --restore &"
-    spawn "urxvtd -q -o -f &"
-    setWMName "LG3D"
+	spawnOnce "xsetroot -cursor_name left_ptr &"
+	spawnOnce "picom &"
+	spawnOnce "nitrogen --restore &"
+	spawn "urxvtd -q -o -f &"
+	setWMName "LG3D"
 
 ------------------------------
 -- Main
@@ -134,7 +133,7 @@ main = do
 	, layoutHook = avoidStruts $ myLayout ||| layoutHook myBaseConfig
 	, logHook = dynamicLogWithPP xmobarPP
 			{ ppOutput = \x -> hPutStrLn xmproc x
-			, ppTitle = xmobarColor "#88C0D0" "" . shorten 60
+			, ppTitle = xmobarColor "#a3be8c" "" . shorten 60
 			, ppCurrent = xmobarColor "#EBCB8B" "" . wrap "[" "]"
 			, ppHidden = xmobarColor "#88C0D0" ""
 			, ppLayout = xmobarColor "#B48EAD" ""
@@ -147,4 +146,4 @@ main = do
 	, focusedBorderColor = myFocusedBorder
 	} `additionalKeysP` myKeys 
 	  `additionalMouseBindings` myMouseKeys
-	  `removeKeysP` [("M-h"),("M-l"),("M-<Tab>")]
+	  `removeKeysP` [("M-h"),("M-l"),("M-<Tab>"),("M-t")]
