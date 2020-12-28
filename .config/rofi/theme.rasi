@@ -2,13 +2,13 @@
 
 * {
 	background-color: transparent;
-	color: #ffffff;
-	font: "DejaVu Sans 9";
+	color: #eceff4;
+	font: "DejaVu Sans 8";
 
 }
 
 element selected {
-	color: #3971ed;
+	color: #5e81ac;
 }
 
 mainbox {
@@ -20,35 +20,35 @@ listview {
 }
 
 prompt {
-	color: #ffffff;
+	color: #eceff4;
 }
 
 entry {
 	width: 100px;
-	color: #ffffff;
+	color: #eceff4;
 	height: 100%;
 }
 
 element {
-	padding: 5 5;
+	padding: 3 5;
 
 }
 
 inputbar {
-	background-color: #3971ed;
-	color: #ffffff;
+	background-color: #5e81ac;
+	color: #eceff4;
 	border-radius: 5px;
-	padding: 5 0;
+	padding: 3 0;
 }
 
 window {
-	background-color: #1d1f21;
+	background-color: #2e3440;
 	width:300px;
-  border-radius: 5px;
+	border-radius: 5px;
 	location: north;
-	y-offset: 5px;
+	y-offset: 10px;
 	width: 1000px;
-	height: 25px;
+	height: 20px;
 }
 
 prompt {
