@@ -41,7 +41,7 @@ myFocusedBorder = "#81A1C1"
 ------------------------------
 -- Layouts Definitions
 ------------------------------
-mySpacing = spacingRaw True (Border 0 0 0 0) True (Border 0 5 5 5) True
+mySpacing = spacingRaw True (Border 0 0 0 0) True (Border 3 3 3 3) True
 
 tall    = renamed [Replace "Tall"]
 	$ mySpacing
@@ -84,7 +84,8 @@ myKeys =
 	[ 
 	-- Most used programs	
 	  ("M-S-<Return>", spawn "thunar")
-	, ("M-p", spawn "dmenu_run -nb '#2e3440' -sb '#5e81ac' -nf '#eceff4' -sf '#eceff4' -fn 'DeJaVu Sans:regular:pixelsize=12'")
+--	, ("M-p", spawn "dmenu_run -nb '#2e3440' -sb '#5e81ac' -nf '#eceff4' -sf '#eceff4' -fn 'DeJaVu Sans:regular:pixelsize=12'")
+	, ("M-p", spawn "rofi -show run")
 	, ("M-f", spawn "firefox")
 	, ("M-<Return>", spawn myTerminal)
 	
@@ -132,7 +133,7 @@ myStartupHook = do
 -- Main
 ------------------------------
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc1"
+    xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc"
     --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc1"
     xmonad $ docks myBaseConfig
 	{ startupHook = myStartupHook
