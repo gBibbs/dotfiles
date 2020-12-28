@@ -41,7 +41,7 @@ myFocusedBorder = "#81A1C1"
 ------------------------------
 -- Layouts Definitions
 ------------------------------
-mySpacing = spacingRaw True (Border 0 0 0 0) True (Border 5 5 5 5) True
+mySpacing = spacingRaw True (Border 0 0 0 0) True (Border 0 5 5 5) True
 
 tall    = renamed [Replace "Tall"]
 	$ mySpacing
@@ -120,8 +120,11 @@ myManageHook = composeAll
 ------------------------------
 myStartupHook = do
 	spawnOnce "xsetroot -cursor_name left_ptr &"
-	spawnOnce "picom --config /home/g/.config/picom/picom.conf &"
-	spawnOnce "nitrogen --restore &"
+	spawn "picom --config /home/g/.config/picom/picom.conf &"
+	spawnOnce "nitrogen --restore"
+	spawn "stalonetray &"
+	spawn "volumeicon &"
+	spawn "nm-applet &"
 	spawn "urxvtd -q -o -f &"
 	setWMName "LG3D"
 
@@ -129,7 +132,7 @@ myStartupHook = do
 -- Main
 ------------------------------
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc"
+    xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc1"
     --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc1"
     xmonad $ docks myBaseConfig
 	{ startupHook = myStartupHook
