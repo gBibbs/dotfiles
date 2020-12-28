@@ -16,6 +16,7 @@ Plugin 'arcticiceStudio/nord-vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'scrooloose/nerdtree-project-plugin'
 Plugin 'xuyuanp/nerdtree-git-plugin'
+Plugin 'valloric/youcompleteme'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -40,6 +41,7 @@ set wildmenu
 set lazyredraw
 set showmatch
 set mouse=a
+set conceallevel=3
 
 " Search
 set incsearch
