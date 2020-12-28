@@ -76,9 +76,9 @@ myClickableWorkspaces = clickable . (map xmobarEscape) $ myWorkspaces
 ------------------------------
 myMouseKeys =
   [ ((mod1Mask, 1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster))
-	, ((mod1Mask, 2), (\w -> focus w >> windows W.shiftMaster))
-	, ((mod1Mask, 3), (\w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster))
-	]
+  , ((mod1Mask, 2), (\w -> focus w >> windows W.shiftMaster))
+  , ((mod1Mask, 3), (\w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster))
+  ]
 
 -- Keys overwrite base XMonad defaults
 myKeys =
@@ -113,22 +113,22 @@ myKeys =
 ------------------------------
 myManageHook = composeAll
   [ className =? "Gimp"		--> doFloat
-	, resource  =? "desktop_window"	--> doIgnore
-	, resource  =? "kdesktop"	--> doIgnore
-	]
+  , resource  =? "desktop_window"	--> doIgnore
+  , resource  =? "kdesktop"	--> doIgnore
+  ]
 
 ------------------------------
 -- Startup Hook
 ------------------------------
 myStartupHook = do
   spawnOnce "xsetroot -cursor_name left_ptr &"
-	spawn "picom --config /home/g/.config/picom/picom.conf &"
-	spawnOnce "nitrogen --restore"
-	spawn "stalonetray &"
-	spawn "volumeicon &"
-	spawn "nm-applet &"
-	spawn "urxvtd -q -o -f &"
-	setWMName "LG3D"
+  spawn "picom --config /home/g/.config/picom/picom.conf &"
+  spawnOnce "nitrogen --restore"
+  spawn "stalonetray &"
+  spawn "volumeicon &"
+  spawn "nm-applet &"
+  spawn "urxvtd -q -o -f &"
+  setWMName "LG3D"
 
 ------------------------------
 -- Main
@@ -137,23 +137,23 @@ main = do
   xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc"
   --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc1"
   xmonad $ docks myBaseConfig
-	{ startupHook = myStartupHook
-	, manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageHook myBaseConfig
-	, layoutHook = avoidStruts $ myLayout ||| layoutHook myBaseConfig
-	, logHook = dynamicLogWithPP xmobarPP
-	  { ppOutput = \x -> hPutStrLn xmproc x
-		  , ppTitle = xmobarColor "#a3be8c" "" . shorten 60
+    { startupHook = myStartupHook
+    , manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageHook myBaseConfig
+    , layoutHook = avoidStruts $ myLayout ||| layoutHook myBaseConfig
+    , logHook = dynamicLogWithPP xmobarPP
+      { ppOutput = \x -> hPutStrLn xmproc x
+      , ppTitle = xmobarColor "#a3be8c" "" . shorten 60
       , ppCurrent = xmobarColor "#ebcb8b" "" . wrap "[" "]"
       , ppHidden = xmobarColor "#88c0d0" ""
       , ppLayout = xmobarColor "#B48EAD" ""
-			, ppWsSep = " | "
-			}
-  , workspaces = myClickableWorkspaces
-  , modMask = myModMask
-	, terminal = myTerminal
-	, borderWidth = myBorderWidth
-	, normalBorderColor = myNormalBorder
-	, focusedBorderColor = myFocusedBorder
-	} `additionalKeysP` myKeys 
-	  `additionalMouseBindings` myMouseKeys
-	  `removeKeysP` [("M-h"),("M-l"),("M-<Tab>"),("M-t")]
+      , ppWsSep = " | "
+      }
+    , workspaces = myClickableWorkspaces
+    , modMask = myModMask
+    , terminal = myTerminal
+    , borderWidth = myBorderWidth
+    , normalBorderColor = myNormalBorder
+    , focusedBorderColor = myFocusedBorder
+    } `additionalKeysP` myKeys 
+      `additionalMouseBindings` myMouseKeys
+      `removeKeysP` [("M-h"),("M-l"),("M-<Tab>"),("M-t")]
