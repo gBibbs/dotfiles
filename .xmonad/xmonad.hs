@@ -85,7 +85,7 @@ myKeys =
   [ 
 	-- Most used programs	
     ("M-S-<Return>", spawn "thunar")
---	, ("M-p", spawn "dmenu_run -nb '#2e3440' -sb '#5e81ac' -nf '#eceff4' -sf '#eceff4' -fn 'DeJaVu Sans:regular:pixelsize=12'")
+--  , ("M-p", spawn "dmenu_run -nb '#2e3440' -sb '#5e81ac' -nf '#eceff4' -sf '#eceff4' -fn 'DeJaVu Sans:regular:pixelsize=12'")
   , ("M-p", spawn "rofi -show run")
   , ("M-f", spawn "firefox")
   , ("M-<Return>", spawn myTerminal)
@@ -112,9 +112,9 @@ myKeys =
 -- Layout Exceptions
 ------------------------------
 myManageHook = composeAll
-  [ className =? "Gimp"		--> doFloat
-  , resource  =? "desktop_window"	--> doIgnore
-  , resource  =? "kdesktop"	--> doIgnore
+  [ className =? "Gimp"           --> doFloat
+  , resource  =? "desktop_window" --> doIgnore
+  , resource  =? "kdesktop"       --> doIgnore
   ]
 
 ------------------------------
