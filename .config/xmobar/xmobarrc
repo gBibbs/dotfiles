@@ -1,15 +1,16 @@
-Config { font = "xft:DejaVu Sans:size=9:antialias=true"
+Config { font = "xft:DejaVu Sans:size=9,xft:Source Hans Sans JP:size=9"
        , bgColor = "#2E3440"
        , fgColor = "#81A1C1"
-       , position = Static { xpos = 10, ypos = 10, width = 1900, height=20 }
+       , position = Top
+       --, position = Static { xpos = 10, ypos = 10, width = 1900, height=20 }
        , commands = [ Run Weather "KDAL" ["-t"," <tempF> °F"] 36000
                     , Run Cpu ["-L","3","-H","50"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Date "%a %b %_d %l:%M%P" "date" 10
+                    , Run Date "%A %b %_d %l:%M:%S%P" "date" 10
                     , Run UnsafeStdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %UnsafeStdinReader% }{ <fc=#B48EAD>%KDAL%</fc> | <fc=#BF616A>%cpu%</fc> | <fc=#88C0D0>%memory%</fc> | <fc=#EBCB8B>%date%</fc> "
+       , template = " %UnsafeStdinReader% }{ <fc=#B48EAD>%KDAL%</fc> | <fc=#88C0D0>%cpu%</fc> | <fc=#a3be8c>%memory%</fc> | <fc=#EBCB8B>%date%</fc> "
        }
 

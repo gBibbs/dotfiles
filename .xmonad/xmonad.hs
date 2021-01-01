@@ -7,6 +7,8 @@ import System.IO
 
 import XMonad
 
+import XMonad.Actions.CycleWS
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -52,7 +54,9 @@ spirals = renamed [Replace "Spiral"]
         $ mySpacing
         $ spiral (6/7)
 
-myLayout = gaps[(U,10), (R,10), (D,10), (L,10)] $ (tall ||| spiral (6/7) ||| Mirror tall ||| floats ||| noBorders Full)
+myLayout = gaps[(U,3), (R,3), (D,3), (L,3)] $ smartBorders $  myDefaultLayout
+  where myDefaultLayout = tall ||| spiral (6/7) ||| floats
+--myLayout = tall ||| spiral (6/7) ||| floats
 
 ------------------------------
 -- Workspaces
@@ -89,17 +93,20 @@ myKeys =
   , ("M-p", spawn "rofi -show run")
   , ("M-f", spawn "firefox")
   , ("M-<Return>", spawn myTerminal)
+  , ("M-S-v", spawn "pavucontrol")
 
+  -- Screenshots
+  , ("<Print>", spawn "scrot -u -e 'mv $f $$HOME/Pictures/Screenshots'")
+
+  -- Return window to tiled
   , ("C-S-t", withFocused $ windows . W.sink)
-	-- Alt Tab between windows in current ws		
-  , ("M1-<Tab>", windows W.focusDown)
-
+	
 	-- Resize the layout
   , ("M-S-h", sendMessage Shrink)
   , ("M-S-l", sendMessage Expand)
   , ("M-C-h", sendMessage MirrorShrink)
   , ("M-C-l", sendMessage MirrorExpand)
-	
+
 	-- Kill selected window
   , ("M-q", kill)
 
@@ -112,9 +119,15 @@ myKeys =
 -- Layout Exceptions
 ------------------------------
 myManageHook = composeAll
-  [ className =? "Gimp"           --> doFloat
+  [ className =? "Gimp"           --> doCenterFloat
+  , className =? "feh"            --> doCenterFloat
+  , className =? "Steam"          --> doCenterFloat
+  , className =? "Piper"          --> doCenterFloat
+  , isDialog                      --> doCenterFloat
   , resource  =? "desktop_window" --> doIgnore
   , resource  =? "kdesktop"       --> doIgnore
+  , title =? "Downloads"          --> doFloat
+  , title =? "Save As..."         --> doFloat
   ]
 
 ------------------------------
@@ -122,27 +135,31 @@ myManageHook = composeAll
 ------------------------------
 myStartupHook = do
   spawnOnce "xsetroot -cursor_name left_ptr &"
+  spawn "nitrogen --restore &"
   spawn "picom --config /home/g/.config/picom/picom.conf &"
-  spawnOnce "nitrogen --restore"
-  spawn "stalonetray &"
-  spawn "volumeicon &"
-  spawn "nm-applet &"
+--  spawn "stalonetray &"
+--  spawn "volumeicon &"
+--  spawn "nm-applet &"
+--  spawn "blueberry &"
+--  spawn "redshift-gtk &"
   spawn "urxvtd -q -o -f &"
+
+--  spawnOnce "$HOME/.xmonad/scripts/autostart.sh"
   setWMName "LG3D"
 
 ------------------------------
 -- Main
 ------------------------------
 main = do
-  xmproc <- spawnPipe "xmobar -x 0 /home/g/.config/xmobar/xmobarrc"
-  --xmproc1 <- spawnPipe "xmobar -x 1 /home/g/.config/xmobar/xmobarrc1"
+  xmproc <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc"
+  --xmproc1 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc1"
   xmonad $ docks myBaseConfig
     { startupHook = myStartupHook
-    , manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageHook myBaseConfig
+    , manageHook = myManageHook <+> manageHook myBaseConfig
     , layoutHook = avoidStruts $ myLayout ||| layoutHook myBaseConfig
     , logHook = dynamicLogWithPP xmobarPP
-      { ppOutput = \x -> hPutStrLn xmproc x
-      , ppTitle = xmobarColor "#a3be8c" "" . shorten 60
+      { ppOutput = \x -> hPutStrLn xmproc x -- >> hPutStrLn xmproc1 x
+      , ppTitle = xmobarColor "#a3be8c" "" . shorten 100
       , ppCurrent = xmobarColor "#ebcb8b" "" . wrap "[" "]"
       , ppHidden = xmobarColor "#88c0d0" ""
       , ppLayout = xmobarColor "#B48EAD" ""

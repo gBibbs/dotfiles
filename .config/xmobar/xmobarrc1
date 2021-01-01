@@ -1,7 +1,7 @@
 Config { font = "xft:DejaVu Sans:size=9:antialias=true"
        , bgColor = "#2E3440"
        , fgColor = "#81A1C1"
-       , position = Static { xpos = 10, ypos = 10, width = 1045, height=20 }
+       , position = Static { xpos = 1930, ypos = 10, width = 1900, height=20 }
        , commands = [ Run Weather "KDAL" ["-t"," <tempF> °F"] 36000
                     , Run Cpu ["-L","3","-H","50"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
