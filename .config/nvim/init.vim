@@ -11,7 +11,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'preservim/nerdcommenter'
 Plugin 'joshdick/onedark.vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'vim-airline/vim-airline'
@@ -19,6 +19,7 @@ Plugin 'ap/vim-css-color'
 Plugin 'arcticiceStudio/nord-vim'
 Plugin 'frazrepo/vim-rainbow'
 Plugin 'yggdroot/indentline'
+Plugin 'morhetz/gruvbox'
 
 Plugin 'junegunn/fzf'
 Plugin 'neoclide/coc.nvim'
@@ -34,8 +35,13 @@ let mapleader = ' '
 syntax enable
 set t_Co=256
 set number
-colorscheme nord
 " set conceallevel=3
+
+" gruvbox colorscheme
+"set background=dark
+set background=dark
+let g:gruvbox_contrast_light = 'hard'
+colorscheme gruvbox
 
 " Tabs
 set expandtab
